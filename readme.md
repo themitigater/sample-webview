@@ -1,4 +1,4 @@
-[[Sample Webview Implmentation]]
+**Sample Webview Implementation**
 
 Implements a Webview to open IDfy's Capture Links.
 - The app first needs access to al the relevant permissions.
