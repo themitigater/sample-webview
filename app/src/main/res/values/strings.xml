@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MyWebViewApplication</string>
+    <string name="title_activity_redirect_link">Redirect_link</string>
 </resources>
