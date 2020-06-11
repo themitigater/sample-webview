@@ -47,7 +47,9 @@ public class Redirect_link extends AppCompatActivity {
             webView.setWebViewClient(new WebViewClient());
             WebSettings webSettings = webView.getSettings();
             webSettings.setJavaScriptEnabled(true);
-            webSettings.setMediaPlaybackRequiresUserGesture(false);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                webSettings.setMediaPlaybackRequiresUserGesture(false);
+            }
             webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
             webView.getSettings().setPluginState(WebSettings.PluginState.ON_DEMAND);
             Bundle bundle = getIntent().getExtras();
@@ -56,14 +58,15 @@ public class Redirect_link extends AppCompatActivity {
             webSettings.setDomStorageEnabled(true);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 WebView.setWebContentsDebuggingEnabled(true);
-                int hasCameraPermission = checkSelfPermission(android.Manifest.permission.CAMERA);
+                int hasCameraPermission = checkSelfPermission(Manifest.permission.CAMERA);
 
                 List<String> permissions = new ArrayList<String>();
 
                 if (hasCameraPermission != PackageManager.PERMISSION_GRANTED) {
-                    permissions.add(android.Manifest.permission.CAMERA);
+                    permissions.add(Manifest.permission.CAMERA);
                     permissions.add(Manifest.permission.RECORD_AUDIO);
                     permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+                    permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
                     permissions.add(Manifest.permission.LOCATION_HARDWARE);
                 }
                 if (!permissions.isEmpty()) {
