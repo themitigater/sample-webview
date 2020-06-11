@@ -2,9 +2,15 @@ package com.example.mywebviewapplication;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.webkit.GeolocationPermissions;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -57,6 +63,8 @@ public class Redirect_link extends AppCompatActivity {
                 if (hasCameraPermission != PackageManager.PERMISSION_GRANTED) {
                     permissions.add(android.Manifest.permission.CAMERA);
                     permissions.add(Manifest.permission.RECORD_AUDIO);
+                    permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+                    permissions.add(Manifest.permission.LOCATION_HARDWARE);
                 }
                 if (!permissions.isEmpty()) {
                     requestPermissions(permissions.toArray(new String[permissions.size()]), 111);
@@ -77,7 +85,39 @@ public class Redirect_link extends AppCompatActivity {
                         request.grant(request.getResources());
                     }
                 }
+                @Override
+                public void onGeolocationPermissionsShowPrompt(final String origin, final GeolocationPermissions.Callback callback) {
+                    if (ContextCompat.checkSelfPermission(Redirect_link.this,
+                            Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(Redirect_link.this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                            new AlertDialog.Builder(Redirect_link.this)
+                                    .setMessage("Allow Location Access?")
+                                    .setNeutralButton(R.string.alert_dialog_button, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            ActivityCompat.requestPermissions(Redirect_link.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 111);
+                                        }
+                                    }).show();
+                        } else {
+                            ActivityCompat.requestPermissions(Redirect_link.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 111);
+                        }
+                    } else {
+                        callback.invoke(origin, true, true);
+                    }
+                }
             });
+
+//            webView.setWebViewClient(new WebViewClient() {
+////                @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+//                // Grant permissions for cam
+////                @Override
+////                public void onPermissionRequest(final PermissionRequest request) {
+////
+////                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+////                        request.grant(request.getResources());
+////                    }
+////                }
+//            });
 //
 //        webView.setWebChromeClient(new WebChromeClient() {
 //            @Override
