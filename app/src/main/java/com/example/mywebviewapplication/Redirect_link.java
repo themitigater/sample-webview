@@ -49,7 +49,7 @@ public class Redirect_link extends AppCompatActivity {
             webSettings.setJavaScriptEnabled(true);
             webSettings.setMediaPlaybackRequiresUserGesture(false);
             webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-            webView.getSettings().setPluginState(WebSettings.PluginState.ON_DEMAND);
+            webView.getSettings().setPluginState(WebSettings.PluginState.ON);
             Bundle bundle = getIntent().getExtras();
             URL = bundle.getString("link");
 
