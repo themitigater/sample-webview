@@ -47,9 +47,7 @@ public class Redirect_link extends AppCompatActivity {
             webView.setWebViewClient(new WebViewClient());
             WebSettings webSettings = webView.getSettings();
             webSettings.setJavaScriptEnabled(true);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                webSettings.setMediaPlaybackRequiresUserGesture(false);
-            }
+            webSettings.setMediaPlaybackRequiresUserGesture(false);
             webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
             webView.getSettings().setPluginState(WebSettings.PluginState.ON_DEMAND);
             Bundle bundle = getIntent().getExtras();
